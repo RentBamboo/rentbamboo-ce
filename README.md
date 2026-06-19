@@ -1,82 +1,153 @@
-<p align="center">
-  <a href="https://clerk.com?utm_source=github&utm_medium=owned" target="_blank" rel="noopener noreferrer">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./assets/light-logo.png">
-      <img alt="Clerk Logo for light background" src="./assets/dark-logo.png" height="64">
-    </picture>
-  </a>
-  <br />
-</p>
-<div align="center">
-  <h1>
-    Clerk and Chrome Extension Quickstart 
-  </h1>  
-  <a href="https://www.npmjs.com/package/@clerk/clerk-js">
-    <img alt="Downloads" src="https://img.shields.io/npm/dm/@clerk/clerk-js" />
-  </a>
-  <a href="https://clerk.com/discord">
-    <img alt="Discord" src="https://img.shields.io/discord/856971667393609759?color=7389D8&label&logo=discord&logoColor=ffffff" />
-  </a>
-  <a href="https://x.com/clerk">
-    <img alt="Follow on X" src="https://img.shields.io/twitter/url.svg?label=%40clerk&style=social&url=https%3A%2F%2Fx.com%2Fclerk" />
-  </a> 
-  <br />
-  <br />
-  <img alt="Clerk Hero Image" src="./assets/hero.png">
-</div>
+# RentBamboo Chrome Extension
 
-## Introduction
+The official [RentBamboo](https://rentbamboo.com) Chrome Extension. Brings RentBamboo tools directly into your browser while you browse rental listing sites.
 
-Clerk is a developer-first authentication and user management solution. It provides pre-built React components and hooks for sign-in, sign-up, user profile, and organization management. Clerk is designed to be easy to use and customize, and can be dropped into any Chrome Extension application.
+## Tech Stack
 
-After following the quickstart you'll have learned how to:
+- **Framework:** [Plasmo](https://docs.plasmo.com/) (Chrome Extension framework)
+- **Auth:** [Clerk](https://clerk.com) via `@clerk/chrome-extension`
+- **UI:** React 19, Tailwind CSS, Radix UI primitives
+- **Language:** TypeScript
+- **Package Manager:** pnpm 10
 
-- Scaffold a new application using the Plasmo framework
-- Install `@clerk/chrome-extension`
-- Set your environment variables
-- Add `<ClerkProvider>` to your application
-- Create a header with Clerk components for users to sign in and out
-- Configure a consistent CRX key
-- Load your Chrome Extension into your Chromium-based browser
-- Test your Chrome Extension
+## Prerequisites
 
-## Running the template
+| Tool | Version |
+|------|---------|
+| Node.js | >= 18 |
+| pnpm | >= 10 |
+| Chromium-based browser | Chrome, Edge, Brave, etc. |
+
+## Getting Started
+
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/clerk/clerk-chrome-extension-quickstart.git
+git clone https://github.com/rentbamboo/rentbamboo-ce.git
+cd rentbamboo-ce
 ```
 
-To run the example locally, you need to:
+### 2. Install dependencies
 
-1. Sign up for a Clerk account at [https://clerk.com](https://dashboard.clerk.com/sign-up?utm_source=readme&utm_medium=owned&utm_campaign=chrome-extension&utm_content=10-24-2023&utm_term=clerk-chrome-extension-quickstart).
+```bash
+pnpm install
+```
 
-2. Go to the [Clerk dashboard](https://dashboard.clerk.com?utm_source=readme&utm_medium=owned&utm_campaign=chrome-extension&utm_content=10-24-2023&utm_term=clerk-chrome-extension-quickstart) and create an application.
+### 3. Configure environment variables
 
-3. Set the required Clerk environment variables as shown in [the example `.env.development` file](./.env.development.example).
+Copy the example files and fill in your values:
 
-4. Create a [consistent CRX ID](https://clerk.com/docs/references/chrome-extension/configure-consistent-crx-id) for your extension.
+```bash
+cp .env.development.example .env.development
+cp .env.chrome.example .env.chrome
+```
 
-5. Set the public key as shown in [the example `.env.chrome` file](./.env.chrome.example).
+#### `.env.development`
 
-6. `pnpm install` to install the required dependencies.
+| Variable | Description |
+|----------|-------------|
+| `PLASMO_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key (from [Clerk Dashboard → API Keys](https://dashboard.clerk.com)) |
+| `CLERK_FRONTEND_API` | Clerk Frontend API URL (e.g. `https://clerk.rentbamboo.com`) |
+| `PLASMO_PUBLIC_CLERK_SYNC_HOST` | The RentBamboo web app URL the extension syncs auth sessions with (e.g. `https://rentbamboo.com`) |
 
-7. `pnpm dev` to launch the development server.
+#### `.env.chrome`
 
-## Learn more
+| Variable | Description |
+|----------|-------------|
+| `CRX_PUBLIC_KEY` | Consistent CRX public key for a stable extension ID. See [Clerk docs](https://clerk.com/docs/references/chrome-extension/configure-consistent-crx-id). |
 
-To learn more about Clerk and Chrome Extensions, check out the following resources:
+> **⚠️ Never commit real `.env.development` or `.env.chrome` files.** Only the `.example` files should be checked in.
 
-- [Quickstart: Get started with Chrome Extensions and Clerk](https://clerk.com/docs/quickstarts/chrome-extension?utm_source=readme&utm_medium=owned&utm_campaign=chrome-extension&utm_content=10-24-2023&utm_term=clerk-chrome-extension-quickstart)
+### 4. Run in development
 
-- [Clerk Documentation](https://clerk.com/docs?utm_source=readme&utm_medium=owned&utm_campaign=chrome-extension&utm_content=10-24-2023&utm_term=clerk-chrome-extension-quickstart)
-- [Chrome Extensions](https://developer.chrome.com/docs/extensions)
+```bash
+pnpm dev
+```
 
-## Found an issue or want to leave feedback
+This starts the Plasmo dev server with hot-reload.
 
-[Contact](https://clerk.com/contact/support) or email [support@clerk.com](mailto:support@clerk.com) us for support.
+### 5. Load the extension in Chrome
 
-## Connect with us
+1. Open `chrome://extensions` in your browser.
+2. Enable **Developer mode** (toggle in top-right).
+3. Click **Load unpacked**.
+4. Select the `build/chrome-mv3-dev` directory from this project.
 
-You can discuss ideas and meet others from the community in our [Discord](https://clerk.com/discord).
+The extension will reload automatically as you make changes.
 
-You can also follow [@clerk on X](https://x.com/clerk) for updates.
+### 6. Build for production
+
+```bash
+pnpm build
+```
+
+The production build outputs to `build/chrome-mv3-prod`.
+
+To create a distributable `.zip`:
+
+```bash
+pnpm package
+```
+
+## Project Structure
+
+```
+├── src/
+│   ├── background.ts        # Service worker / background script
+│   ├── content.tsx           # Content script injected into pages
+│   ├── style.css             # Global styles (Tailwind)
+│   ├── components/           # Shared UI components
+│   ├── contents/             # Additional content scripts
+│   ├── features/             # Feature-specific modules
+│   ├── hooks/                # Custom React hooks
+│   ├── lib/                  # Utility functions
+│   └── popup/                # Extension popup UI
+├── assets/                   # Static assets (logos, images)
+├── .env.development.example  # Template for development env vars
+├── .env.chrome.example       # Template for Chrome CRX key
+├── package.json              # Dependencies & Plasmo manifest config
+├── tailwind.config.js        # Tailwind CSS configuration
+├── tsconfig.json             # TypeScript configuration
+└── postcss.config.js         # PostCSS configuration
+```
+
+## CI/CD
+
+The `.github/workflows/submit.yml` workflow handles publishing to the Chrome Web Store. It is triggered manually via `workflow_dispatch` and requires the `SUBMIT_KEYS` secret to be configured in your repository settings.
+
+### Environment Variables for CI
+
+Add these as **repository secrets** in GitHub:
+
+| Secret | Purpose |
+|--------|---------|
+| `SUBMIT_KEYS` | Browser Platform Publisher keys for Chrome Web Store submission |
+| `PLASMO_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key for production build |
+| `CLERK_FRONTEND_API` | Clerk Frontend API URL |
+| `PLASMO_PUBLIC_CLERK_SYNC_HOST` | RentBamboo web app URL |
+| `CRX_PUBLIC_KEY` | Stable extension CRX public key |
+
+## Useful Commands
+
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start development server with HMR |
+| `pnpm build` | Create production build |
+| `pnpm package` | Package build into `.zip` for distribution |
+
+## Learn More
+
+- [RentBamboo](https://rentbamboo.com)
+- [Plasmo Documentation](https://docs.plasmo.com/)
+- [Clerk Chrome Extension SDK](https://clerk.com/docs/references/chrome-extension/overview)
+- [Chrome Extension Developer Docs](https://developer.chrome.com/docs/extensions)
+
+## Contributing
+
+1. Create a feature branch from `main`.
+2. Make your changes and test locally by loading the unpacked extension.
+3. Open a pull request with a clear description of the change.
+
+## License
+
+Proprietary – © RentBamboo. All rights reserved.

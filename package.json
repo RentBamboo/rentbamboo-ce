@@ -1,9 +1,9 @@
 {
-  "name": "clerk-chrome-extension-quickstart",
-  "displayName": "Clerk chrome extension quickstart",
+  "name": "rentbamboo-ce",
+  "displayName": "RentBamboo",
   "version": "0.0.1",
-  "description": "A basic implementation of Clerk with a Plasmo-based Chrome Extension.",
-  "author": "Clerk",
+  "description": "RentBamboo Chrome Extension",
+  "author": "RentBamboo",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
@@ -11,9 +11,19 @@
   },
   "dependencies": {
     "@clerk/chrome-extension": "^2.5.21",
+    "@phosphor-icons/react": "^2.1.10",
+    "@radix-ui/react-avatar": "^1.2.0",
+    "@radix-ui/react-collapsible": "^1.1.14",
+    "@radix-ui/react-dropdown-menu": "^2.1.18",
+    "@radix-ui/react-separator": "^1.1.10",
+    "@radix-ui/react-tooltip": "^1.2.10",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "plasmo": "^0.90.5",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-router-dom": "^7.17.0",
+    "tailwind-merge": "^3.6.0",
     "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
@@ -32,8 +42,9 @@
       "storage"
     ],
     "host_permissions": [
-      "http://localhost/*",
-      "$CLERK_FRONTEND_API/*"
+      "$PLASMO_PUBLIC_CLERK_SYNC_HOST/*",
+      "$CLERK_FRONTEND_API/*",
+      "https://*.myresman.com/*"
     ],
     "key": "$CRX_PUBLIC_KEY"
   },

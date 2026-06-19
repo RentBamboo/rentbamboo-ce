@@ -9,7 +9,7 @@
 # testing
 /coverage
 
-#cache
+# cache
 .turbo
 
 # misc
@@ -22,10 +22,11 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# local env files
+# local env files — only .example files should be committed
 .env*
 !.env*.example
 
+# build output
 out/
 build/
 dist/
@@ -37,4 +38,5 @@ dist/
 keys.json
 
 # typescript
-.tsbuildinfo
+*.tsbuildinfo
+tsconfig.tsbuildinfo
